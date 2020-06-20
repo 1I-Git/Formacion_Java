@@ -1,0 +1,39 @@
+/* Login */
+.login-body{
+    background: rgb(118,125,255);
+    background: linear-gradient(97deg, rgba(118,125,255,1) 0%, rgba(22,153,227,1) 80%, rgba(0,181,238,1) 100%);
+  }
+
+  .boton-login{
+    background: rgb(87,104,255);
+    background: linear-gradient(153deg, rgba(87,104,255,1) 0%, rgba(22,157,227,1) 66%, rgba(0,238,171,1) 100%);
+  }
+
+  /* Olvidar Contraseña */
+
+  .forgot-body{
+    background: rgb(148,255,187);
+    background: linear-gradient(97deg, rgba(148,255,187,1) 0%, rgba(188,255,213,1) 84%, rgba(185,238,255,1) 100%);
+  }
+
+  .boton-forgot{
+    background: rgb(148,255,187);
+    background: linear-gradient(97deg, rgba(148,255,187,1) 0%, rgba(188,255,213,1) 84%, rgba(185,238,255,1) 100%);
+    color: #000000;
+  }
+
+  /* Crear Nueva Cuenta*/
+
+  .register-body{
+    background: rgb(131,58,180);
+    background: linear-gradient(97deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 91%, rgba(255,165,38,1) 100%);
+  }
+
+  .card-registro{
+    margin-top: 100px;
+  }
+
+  .boton-register{
+    background: rgb(131,58,180);
+    background: linear-gradient(97deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 91%, rgba(255,165,38,1) 100%);
+  }
