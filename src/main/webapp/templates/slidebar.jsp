@@ -104,14 +104,15 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="pages/login.jsp">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+            <h4 class="collapse-header text-success">Proyecto:</h4>
+            <c:forEach items="${proyectos}" var="p">
+            <a class="collapse-item text-sm" href="pages/login.jsp">${ p.nombre }</a>
+			</c:forEach>
             <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
+            <h6 class="collapse-header text-success">Lenguaje:</h6>
+            <c:forEach items="${lenguajes}" var="l">
+            <a class="collapse-item" href="login?nombre=${l.nombre }">${ l.nombre }</a>
+          	</c:forEach>
           </div>
         </div>
       </li>

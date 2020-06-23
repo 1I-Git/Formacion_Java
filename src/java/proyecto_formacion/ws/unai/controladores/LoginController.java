@@ -1,6 +1,8 @@
 package ws.unai.controladores;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ws.unai.dao.LenguajeDaoImpl;
+import ws.unai.dao.ProyectoDaoImpl;
 import ws.unai.dao.UsuarioDaoImpl;
+import ws.unai.modelo.Lenguaje;
+import ws.unai.modelo.Proyecto;
 import ws.unai.modelo.Usuario;
 
 /**
@@ -30,8 +36,21 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//Recoger parametro
+		String parametroNombre = request.getParameter("nombre");
+		//ObjDao
+		ProyectoDaoImpl objDaoProyecto = ProyectoDaoImpl.getInstance();
+		
+		ArrayList<Proyecto> lenguajeProyectos = new ArrayList<Proyecto>();
+		
+		lenguajeProyectos = objDaoProyecto.getColorName(8, parametroNombre);
+		
+		//Mandar datos a la vista
+		request.setAttribute("lenguajeProyectos", lenguajeProyectos );
+		request.setAttribute("parametro", parametroNombre );
+		
+		//Mandar a la vista Principal(index.jsp)
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	/**
@@ -45,10 +64,12 @@ public class LoginController extends HttpServlet {
 			String pass = request.getParameter("pass");
 			
 			//OBJ del Dao
-			UsuarioDaoImpl objDao =  UsuarioDaoImpl.getInstance();
-			
+			UsuarioDaoImpl objDaoUsuario =  UsuarioDaoImpl.getInstance();
+			ProyectoDaoImpl objDaoProyecto = ProyectoDaoImpl.getInstance();
+			LenguajeDaoImpl objDaoLenguaje = LenguajeDaoImpl.getInstance();
+					
 			//Guardar datos del usuario en un Obj
-			Usuario usuario = objDao.existe(correo, pass);
+			Usuario usuario = objDaoUsuario.existe(correo, pass);
 			
 			if (usuario != null) {
 				
@@ -62,6 +83,24 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("apellido_usuario", usuario.getApellido());
 				session.setAttribute("correo_usuario", usuario.getCorreo());
 				session.setAttribute("pass_usuario", usuario.getPass());
+				
+				//Mostrar todos los Proyectos
+				ArrayList<Proyecto> proyectos = objDaoProyecto.getAll();
+				
+				//Mostrar todos los Lenguajes
+				ArrayList<Lenguaje> lenguajes = objDaoLenguaje.getAll();
+				
+				//Mostrar los ultimos Proyectos
+				ArrayList<Proyecto> ultimosProyectos = objDaoProyecto.getLast(5);
+				
+				//Mostrar proyectos de un lenguaje en concreto
+				ArrayList<Proyecto> lenguajeProyectos = objDaoProyecto.getColorName(8, "SQL");
+				
+				//Enviar datos a la vista
+				request.setAttribute("proyectos", proyectos);
+				request.setAttribute("lenguajes", lenguajes);
+				request.setAttribute("ultimosProyectos", ultimosProyectos);
+				request.setAttribute("lenguajeProyectos", lenguajeProyectos);
 				
 				//Mandar a la vista Principal(index.jsp)
 				request.getRequestDispatcher("index.jsp").forward(request, response);
