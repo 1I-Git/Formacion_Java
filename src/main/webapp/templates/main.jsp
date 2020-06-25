@@ -12,7 +12,7 @@
 
             <!-- Earnings (Monthly) Card Example todos(8) -->
             
-            <c:forEach items="${ultimosProyectos}" var="p">
+            <c:forEach items="${proyectoLenguajes}" var="p" begin="1" end="8">
               
 	            <div class="col-xl-3 col-md-6 mb-4">
 	              <div class="card border-left-success shadow h-100 py-2">
@@ -21,9 +21,9 @@
 	                    <div class="col mr-2">
 	                      <div class="h5 font-weight-bold text-success text-uppercase mb-1"><a class="text-success" href="#">${ p.nombre }</a></div>
 	                      <div class="text-xs mb-0 font-weight-bold text-gray-800">${ p.descripcion }</div>
-	                      
-	                      <span class="badge badge-pill badge-${ p.lenguaje.color }">${ p.lenguaje.nombre }</span>
-	                      
+	                      <c:forEach items="${p.lenguajes}" var="l">
+	                      <span class="badge badge-pill badge-${ l.color }">${ l.nombre }</span>
+	                      </c:forEach>
 	                    </div>
 	                    <div class="col-auto">
 	                      <i class="fas fa fa-folder fa-2x text-gray-300"></i>

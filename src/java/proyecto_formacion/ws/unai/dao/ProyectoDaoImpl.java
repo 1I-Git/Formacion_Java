@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ws.unai.conexion.EstablecerConexion;
 import ws.unai.interfaces.IProyecto;
@@ -58,6 +59,18 @@ public class ProyectoDaoImpl implements IProyecto {
 											  "FROM proyectos p , lenguajes l, proyectos_tiene_lenguajes ptl " + 
 											  "WHERE p.id = ptl.id_proyecto AND l.id = ptl.id_lenguajes AND l.nombre = ? " + 
 											  "ORDER BY p.id ASC LIMIT ?  ;";
+	
+	
+	private final String SQL_GET_ALL_WITH_LENGUAJE = "SELECT " +
+													  " p.id     'pro_id', " +	
+													  " p.nombre     'pro_nombre', " +
+													  " p.descripcion     'pro_descripcion', " +
+													  " l.id     'len_id', " +
+													  " l.nombre     'len_nombre', " +
+													  " l.color     'len_color' " +
+													  "FROM proyectos p , lenguajes l, proyectos_tiene_lenguajes ptl " + 
+													  "WHERE p.id = ptl.id_proyecto AND l.id = ptl.id_lenguajes " + 
+													  "ORDER BY p.nombre ASC LIMIT ?  ;";
 
 	// Metodos de la Interface
 
@@ -213,6 +226,67 @@ public class ProyectoDaoImpl implements IProyecto {
 		
 		return proyectoLenguaje;
 	}
+	
+	// Devolver proyecto con sus lenguajes 
+	@Override
+	public ArrayList<Proyecto> getAllWhithLenguajes(int limite) {
+		ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>();
+		//La clave es un Integer con el id del lenguaje
+		HashMap<Integer, Proyecto> registros = new HashMap<Integer, Proyecto>();
+		
+		try (
+				// Establecer Conexion & Preparar la sentencia SQL
+				Connection con = EstablecerConexion.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL_WITH_LENGUAJE);
+				
+				) {
+			
+				//Pasar valor a la sentencia SQL 
+				pst.setInt(1, limite);
+				
+				try(ResultSet rs = pst.executeQuery();) {
+					
+					while (rs.next()) {
+						
+						int idProyecto = rs.getInt("pro_id"); //Key del hasmap
+						
+						//Recuperar proyecto del hasmap
+						Proyecto p = registros.get(idProyecto);
+						
+						//Comprobar si es null y rellenarlo evitando duplicados
+						
+						if (p == null) {
+							p = new Proyecto();
+							
+							p.setId(idProyecto);
+							p.setNombre(rs.getString("pro_nombre"));
+							p.setDescripcion(rs.getString("pro_descripcion"));
+							
+						}
+						//Crerar obj tipo lenguaje y rellenarlo
+						Lenguaje l = new Lenguaje();
+						
+						l.setId(rs.getInt("len_id"));
+						l.setNombre(rs.getString("len_nombre"));
+						l.setColor(rs.getString("len_color"));
+						
+						//recuperar los lenguajes y añadir uno nuevo dentro del proyecto
+						p.getLenguajes().add(l);
+						
+						//guardar en el hasmap el proyecto
+						registros.put(idProyecto, p);
+					}
+				}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		//nuevo arraylist con los valores del hasmap
+		return new ArrayList<Proyecto>(registros.values());
+	}
+	
+	
 	
 
 

@@ -20,11 +20,11 @@ public class PruebasPorConsola {
 		
 		//Mostrar proyectos y lenguajes
 		
-		ArrayList<Proyecto> proyecto = objDaoProyecto.getLast(8);
-		
-		for (Proyecto p : proyecto) {
-			System.out.println(p.getNombre());
-	}
+//		ArrayList<Proyecto> proyecto = objDaoProyecto.getLast(8);
+//		
+//		for (Proyecto p : proyecto) {
+//			System.out.println(p.getNombre());
+//	}
 		//Mostrar datos de un usuario si existe
 		//System.out.println(objDao.existe("1i@mail.com", "0123"));
 	
@@ -35,7 +35,7 @@ public class PruebasPorConsola {
 //		lenguajeProyectos = objDaoProyecto.getColorName(8, "Java");
 //		lenguajeProyectos.forEach(System.out::println);;
 		
-
+		
 	}
 
 }

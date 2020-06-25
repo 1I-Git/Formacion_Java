@@ -84,23 +84,11 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("correo_usuario", usuario.getCorreo());
 				session.setAttribute("pass_usuario", usuario.getPass());
 				
-				//Mostrar todos los Proyectos
-				ArrayList<Proyecto> proyectos = objDaoProyecto.getAll();
+				//Mostrar todos los lenguajes de un proyecto
 				
-				//Mostrar todos los Lenguajes
-				ArrayList<Lenguaje> lenguajes = objDaoLenguaje.getAll();
+				ArrayList<Proyecto> proyectoLenguajes = objDaoProyecto.getAllWhithLenguajes(500);
 				
-				//Mostrar los ultimos Proyectos
-				ArrayList<Proyecto> ultimosProyectos = objDaoProyecto.getLast(5);
-				
-				//Mostrar proyectos de un lenguaje en concreto
-				ArrayList<Proyecto> lenguajeProyectos = objDaoProyecto.getColorName(8, "SQL");
-				
-				//Enviar datos a la vista
-				request.setAttribute("proyectos", proyectos);
-				request.setAttribute("lenguajes", lenguajes);
-				request.setAttribute("ultimosProyectos", ultimosProyectos);
-				request.setAttribute("lenguajeProyectos", lenguajeProyectos);
+				request.setAttribute("proyectoLenguajes", proyectoLenguajes);
 				
 				//Mandar a la vista Principal(index.jsp)
 				request.getRequestDispatcher("index.jsp").forward(request, response);
