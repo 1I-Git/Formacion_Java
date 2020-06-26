@@ -13,11 +13,11 @@ public interface IProyecto {
 	
 	public ArrayList<Proyecto>getLast(int numProyectos);
 	
-	//Devolver los ultimos Proyectos con el color y el nombre del lenguaje
-	
-	public ArrayList<Proyecto>getColorName(int numProyectos , String lenguaje);
-	
 	//Devolver los Proyectos con sus respectivos lenguajes
 	
 	public ArrayList<Proyecto>getAllWhithLenguajes(int limite);
+	
+	//Devolver los Proyectos de un mismo lenguaje
+	
+	public ArrayList<Proyecto>getLenguaje(int limite, String lenguaje);
 }

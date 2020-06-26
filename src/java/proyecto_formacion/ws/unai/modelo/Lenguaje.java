@@ -1,6 +1,5 @@
 package ws.unai.modelo;
 
-import java.util.ArrayList;
 
 public class Lenguaje {
 	//Atributos

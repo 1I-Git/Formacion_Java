@@ -1,6 +1,6 @@
 package ws.unai.dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import ws.unai.conexion.EstablecerConexion;
 import ws.unai.interfaces.ILenguaje;
 import ws.unai.modelo.Lenguaje;
-import ws.unai.modelo.Proyecto;
 
 public class LenguajeDaoImpl implements ILenguaje {
 

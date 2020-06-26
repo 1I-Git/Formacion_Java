@@ -1,6 +1,6 @@
 package ws.unai.controladores;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import ws.unai.dao.LenguajeDaoImpl;
 import ws.unai.dao.ProyectoDaoImpl;
 import ws.unai.dao.UsuarioDaoImpl;
-import ws.unai.modelo.Lenguaje;
 import ws.unai.modelo.Proyecto;
 import ws.unai.modelo.Usuario;
 
@@ -23,6 +21,10 @@ import ws.unai.modelo.Usuario;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	//OBJ del Dao
+	private static final UsuarioDaoImpl objDaoUsuario =  UsuarioDaoImpl.getInstance();
+	private static final ProyectoDaoImpl objDaoProyecto = ProyectoDaoImpl.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,18 +39,22 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Recoger parametro
-		String parametroNombre = request.getParameter("nombre");
-		//ObjDao
-		ProyectoDaoImpl objDaoProyecto = ProyectoDaoImpl.getInstance();
+		String parametroNombre = request.getParameter("nombreLenguaje");
 		
-		ArrayList<Proyecto> lenguajeProyectos = new ArrayList<Proyecto>();
-		
-		lenguajeProyectos = objDaoProyecto.getColorName(8, parametroNombre);
+		if (parametroNombre != null) {
+			//Mostrar todos los proyectos que contiene un lenguaje
+			ArrayList<Proyecto> proyectoLenguajes = objDaoProyecto.getLenguaje(500, parametroNombre);
+			//Enviar datos a la vista
+			request.setAttribute("proyectoLenguajes", proyectoLenguajes);
+		}else {
+			//Mostrar todos los lenguajes de un proyecto
+			ArrayList<Proyecto> proyectoLenguajes = objDaoProyecto.getAllWhithLenguajes(500);
+			//Enviar datos a la vista
+			request.setAttribute("proyectoLenguajes", proyectoLenguajes);
+		}
 		
 		//Mandar datos a la vista
-		request.setAttribute("lenguajeProyectos", lenguajeProyectos );
 		request.setAttribute("parametro", parametroNombre );
-		
 		//Mandar a la vista Principal(index.jsp)
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
@@ -57,16 +63,9 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		try {
 			// Recuperar Datos del formulario
 			String correo = request.getParameter("correo");
 			String pass = request.getParameter("pass");
-			
-			//OBJ del Dao
-			UsuarioDaoImpl objDaoUsuario =  UsuarioDaoImpl.getInstance();
-			ProyectoDaoImpl objDaoProyecto = ProyectoDaoImpl.getInstance();
-			LenguajeDaoImpl objDaoLenguaje = LenguajeDaoImpl.getInstance();
 					
 			//Guardar datos del usuario en un Obj
 			Usuario usuario = objDaoUsuario.existe(correo, pass);
@@ -88,6 +87,7 @@ public class LoginController extends HttpServlet {
 				
 				ArrayList<Proyecto> proyectoLenguajes = objDaoProyecto.getAllWhithLenguajes(500);
 				
+				//Enviar datos a la vista
 				request.setAttribute("proyectoLenguajes", proyectoLenguajes);
 				
 				//Mandar a la vista Principal(index.jsp)
@@ -97,9 +97,7 @@ public class LoginController extends HttpServlet {
 				request.getRequestDispatcher("pages/login.jsp").forward(request, response);
 			}
 			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		
 	}
 
 }

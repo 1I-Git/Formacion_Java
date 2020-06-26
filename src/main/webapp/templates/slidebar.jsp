@@ -19,6 +19,9 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
   <link href="css/login.css" rel="stylesheet">
+  
+  <!-- Fav-icon  -->
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 	
 </head>
 
@@ -43,7 +46,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="login">
           <i class="fas fa-fw fa-home"></i>
           <span>Principal</span></a>
       </li>
@@ -105,13 +108,13 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h4 class="collapse-header text-success">Proyecto:</h4>
-            <c:forEach items="${proyectos}" var="p">
+            <c:forEach items="${proyectos}" var="p" begin="0" end="7">
             <a class="collapse-item text-sm" href="pages/login.jsp">${ p.nombre }</a>
 			</c:forEach>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header text-success">Lenguaje:</h6>
             <c:forEach items="${lenguajes}" var="l">
-            <a class="collapse-item" href="login?nombre=${l.nombre }">${ l.nombre }</a>
+            <a class="collapse-item" href="login?nombreLenguaje=${l.nombre }">${ l.nombre }</a>
           	</c:forEach>
           </div>
         </div>
