@@ -82,6 +82,7 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("apellido_usuario", usuario.getApellido());
 				session.setAttribute("correo_usuario", usuario.getCorreo());
 				session.setAttribute("pass_usuario", usuario.getPass());
+				session.setAttribute("imagen_usuario", usuario.getImagen());
 				
 				//Mostrar todos los lenguajes de un proyecto
 				

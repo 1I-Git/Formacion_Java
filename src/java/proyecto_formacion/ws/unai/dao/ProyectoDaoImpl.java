@@ -38,12 +38,13 @@ public class ProyectoDaoImpl implements IProyecto {
 	private final String SQL_GET_ALL = "SELECT * FROM proyectos ORDER BY id DESC LIMIT 500 ;";
 	
 	private final String SQL_GET_LAST = "SELECT " +
-										  " p.id     'pro_id', " +	
-										  " p.nombre     'pro_nombre', " +
-										  " p.descripcion     'pro_descripcion', " +
-										  " l.id     'len_id', " +
-										  " l.nombre     'len_nombre', " +
-										  " l.color     'len_color' " +
+										  " p.id     'p_id', " +	
+										  " p.nombre     'p_nombre', " +
+										  " p.descripcion     'p_descripcion', " +
+										  " p.enlace     'p_enlace', " +
+										  " l.id     'l_id', " +
+										  " l.nombre     'l_nombre', " +
+										  " l.color     'l_color' " +
 										  "FROM proyectos p , lenguajes l, proyectos_tiene_lenguajes ptl " + 
 										  "WHERE p.id = ptl.id_proyecto AND l.id = ptl.id_lenguajes " + 
 										  "ORDER BY Rand() LIMIT ?  ;";
@@ -53,6 +54,7 @@ public class ProyectoDaoImpl implements IProyecto {
 													  " p.id     'pro_id', " +	
 													  " p.nombre     'pro_nombre', " +
 													  " p.descripcion     'pro_descripcion', " +
+													  " p.enlace     'pro_enlace', " +
 													  " l.id     'len_id', " +
 													  " l.nombre     'len_nombre', " +
 													  " l.color     'len_color' " +
@@ -64,6 +66,7 @@ public class ProyectoDaoImpl implements IProyecto {
 													  " p.id     'pro_id', " +	
 													  " p.nombre     'pro_nombre', " +
 													  " p.descripcion     'pro_descripcion', " +
+													  " p.enlace     'pro_enlace', " +
 													  " l.id     'len_id', " +
 													  " l.nombre     'len_nombre', " +
 													  " l.color     'len_color' " +
@@ -93,6 +96,7 @@ public class ProyectoDaoImpl implements IProyecto {
 				int id = rs.getInt("id");
 				String nombre = rs.getString("nombre");
 				String descripcion = rs.getString("descripcion");
+				String enlace = rs.getString("enlace");
 
 				// Meter datos de las variables en OBJ
 				Proyecto p = new Proyecto();
@@ -100,6 +104,7 @@ public class ProyectoDaoImpl implements IProyecto {
 				p.setId(id);
 				p.setNombre(nombre);
 				p.setDescripcion(descripcion);
+				p.setEnlace(enlace);
 
 				// Guardar Obj en el Array
 				proyectos.add(p);
@@ -133,12 +138,13 @@ public class ProyectoDaoImpl implements IProyecto {
 				// Recorrer el ResultSet
 				while (rs.next()) {
 					// Guardar datos en las variables ****Cambiar Nombres**
-					int idProyecto = rs.getInt("pro_id");
-					String nombreProyecto = rs.getString("pro_nombre");
-					String descripcionProyecto = rs.getString("pro_descripcion");
-					int idLenguaje = rs.getInt("len_id");
-					String nombreLenguaje = rs.getString("len_nombre");
-					String colorLenguaje = rs.getString("len_color");
+					int idProyecto = rs.getInt("p_id");
+					String nombreProyecto = rs.getString("p_nombre");
+					String descripcionProyecto = rs.getString("p_descripcion");
+					String enlaceProyecto = rs.getString("p_enlace");
+					int idLenguaje = rs.getInt("l_id");
+					String nombreLenguaje = rs.getString("l_nombre");
+					String colorLenguaje = rs.getString("l_color");
 
 					// Meter datos de las variables en OBJ
 					Proyecto p = new Proyecto();
@@ -148,6 +154,7 @@ public class ProyectoDaoImpl implements IProyecto {
 					p.setId(idProyecto);
 					p.setNombre(nombreProyecto);
 					p.setDescripcion(descripcionProyecto);
+					p.setEnlace(enlaceProyecto);
 					
 					//Añadir al obj Lenguaje
 					l.setId(idLenguaje);
@@ -204,6 +211,7 @@ public class ProyectoDaoImpl implements IProyecto {
 							p.setId(idProyecto);
 							p.setNombre(rs.getString("pro_nombre"));
 							p.setDescripcion(rs.getString("pro_descripcion"));
+							p.setEnlace(rs.getString("pro_enlace"));
 							
 						}
 						//Crerar obj tipo lenguaje y rellenarlo
@@ -265,6 +273,7 @@ public class ProyectoDaoImpl implements IProyecto {
 							p.setId(idProyecto);
 							p.setNombre(rs.getString("pro_nombre"));
 							p.setDescripcion(rs.getString("pro_descripcion"));
+							p.setEnlace(rs.getString("pro_enlace"));
 							
 						}
 						//Crerar obj tipo lenguaje y rellenarlo

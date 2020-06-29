@@ -8,6 +8,7 @@ public class Proyecto {
 	private int id;
 	private String nombre;
 	private String descripcion;
+	private String enlace;
 	private Lenguaje lenguaje;
 	private ArrayList<Lenguaje> lenguajes;
 	
@@ -18,6 +19,7 @@ public class Proyecto {
 		this.id = 0;
 		this.nombre = "nombre_default";
 		this.descripcion = "descripcion_default";
+		this.enlace = "login";
 		this.lenguaje = new Lenguaje();
 		this.lenguajes = new ArrayList<Lenguaje>();
 	}
@@ -64,20 +66,25 @@ public class Proyecto {
 		this.lenguaje = lenguaje;
 	}
 	
+	public String getEnlace() {
+		return enlace;
+	}
+
+	public void setEnlace(String enlace) {
+		this.enlace = enlace;
+	}
+	
+
 	//ToString ******(No poner lenguajes para evitar bucle con otra clase)******
 	
 	@Override
 	public String toString() {
-		return "Proyecto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return "Proyecto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", enlace=" + enlace
+				+ ", lenguaje=" + lenguaje + "]";
 	}
 	
-	
-	
-	
 
-	
-	
-	
+
 	
 	
 }

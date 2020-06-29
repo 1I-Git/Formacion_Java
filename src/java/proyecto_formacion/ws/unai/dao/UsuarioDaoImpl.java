@@ -32,7 +32,7 @@ public class UsuarioDaoImpl implements IUsuario {
 	
 	//Sentencias SQL
 	
-	private final String SQL_GET_ALL = "SELECT * FROM usuarios ORDER BY id DESC;";
+	private final String SQL_GET_ALL = "SELECT * FROM usuarios ORDER BY id DESC LIMIT 500;";
 	private final String SQL_EXISTE = "SELECT * FROM usuarios WHERE correo = ? AND pass = ? ;";
 	
 	//Metodos de la interface
@@ -56,6 +56,7 @@ public class UsuarioDaoImpl implements IUsuario {
 					String apellido = rs.getString("apellido");
 					String correo = rs.getString("correo");
 					String pass = rs.getString("pass");
+					String imagen = rs.getString("imagen");
 					
 					//Crear Obj y meter los datos
 					Usuario u = new Usuario();
@@ -63,6 +64,7 @@ public class UsuarioDaoImpl implements IUsuario {
 					u.setApellido(apellido);
 					u.setCorreo(correo);
 					u.setPass(pass);
+					u.setImagen(imagen);
 					
 					//Guardar Obj en el array
 					usuarios.add(u);
@@ -102,6 +104,7 @@ public class UsuarioDaoImpl implements IUsuario {
 					u.setApellido(rs.getString("apellido"));
 					u.setCorreo(rs.getString("correo"));
 					u.setPass(rs.getString("pass"));
+					u.setImagen(rs.getString("imagen"));
 				}
 				
 		} catch (Exception e) {

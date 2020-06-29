@@ -8,6 +8,7 @@ public class Usuario {
 	private String apellido;
 	private String correo;
 	private String pass;
+	private String imagen;
 	
 	//Constructores
 	
@@ -57,13 +58,23 @@ public class Usuario {
 		this.pass = pass;
 	}
 	
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
 	//ToString
 	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", pass="
-				+ pass + "]";
+				+ pass + ", imagen=" + imagen + "]";
 	}
+
+	
 	
 	
 	

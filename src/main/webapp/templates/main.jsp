@@ -19,7 +19,7 @@
 	                <div class="card-body">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
-	                      <div class="h5 font-weight-bold text-success text-uppercase mb-1"><a class="text-success" href="#">${ p.nombre }</a></div>
+	                      <div class="h5 font-weight-bold text-success text-uppercase mb-1"><a class="text-success" href="${ p.enlace }">${ p.nombre }</a></div>
 	                      <div class="text-xs mb-0 font-weight-bold text-gray-800">${ p.descripcion }</div>
 	                      <c:forEach items="${p.lenguajes}" var="l">
 	                      <span class="badge badge-pill badge-${ l.color }">${ l.nombre }</span>
