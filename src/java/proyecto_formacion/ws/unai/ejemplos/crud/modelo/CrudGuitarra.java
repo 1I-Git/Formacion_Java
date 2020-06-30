@@ -5,7 +5,7 @@ public class CrudGuitarra {
 	// Variables
 	
 	private int id;
-	private int precio;
+	private float precio;
 	private String nombre;
 	private String marca;
 	private String informacion;
@@ -68,13 +68,14 @@ public class CrudGuitarra {
 		this.img_marca = img_marca;
 	}
 	
-	public int getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
+	
 	
 	//ToString
 	

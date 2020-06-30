@@ -31,6 +31,10 @@ public class CrudGuitarraDaoImpl implements ICrudGuitarra {
 		//Sentencias SQL
 		
 		private final String SQL_GET_ALL = "SELECT * FROM guitarras LIMIT 500;";
+		private final String SQL_GET_BY_ID = "SELECT * FROM guitarras WHERE id = ? ;";
+		private final String SQL_DELETE = " DELETE FROM guitarras WHERE id = ? ; ";
+		private final String SQL_INSERT = " INSERT INTO guitarras (nombre, marca, informacion, precio, img_guitarra, img_marca) VALUES ( ?, ?, ?, ?, ?, ?) ; ";
+		
 		
 		//Metodos de la intefaz ICrudGuitarra
 		@Override
@@ -58,20 +62,75 @@ public class CrudGuitarraDaoImpl implements ICrudGuitarra {
 
 		@Override
 		public CrudGuitarra getById(int id) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
+			CrudGuitarra guitarra = new CrudGuitarra();
+			
+			try(
+					Connection con = EstablecerConexion.getConnection();
+					PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID);
+					
+					) {
+				
+					pst.setInt(1, id);
+					ResultSet rs = pst.executeQuery();
+					
+					if (rs.next()) {
+						mapper(rs);
+					} else {
+						throw new Exception("Id incorrecto");
+					}
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return guitarra;
 		}
 
 		@Override
 		public CrudGuitarra delete(int id) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
+			//Pasar id del obj a eliminar
+			CrudGuitarra guitarra = getById(id);
+			
+			try (
+					Connection con = EstablecerConexion.getConnection();
+					PreparedStatement pst = con.prepareStatement(SQL_DELETE);
+					) {
+					pst.setInt(1, id);
+					int filasAfectadas = pst.executeUpdate();
+					
+					if (filasAfectadas != 1) {
+						throw new Exception("No se puede eliminar");
+					}
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return guitarra;
 		}
 
 		@Override
 		public CrudGuitarra insert(CrudGuitarra pojo) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
+			
+			try(
+					Connection con = EstablecerConexion.getConnection();
+					PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+					
+					) {
+				
+				pst.setString(1, pojo.getNombre());
+				pst.setString(2, pojo.getMarca());
+				pst.setString(3, pojo.getInformacion());
+				pst.setFloat(4, pojo.getPrecio());
+				pst.setString(5, pojo.getImg_guitarra());
+				pst.setString(6, pojo.getImg_marca());
+				pst.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return pojo;
 		}
 
 		@Override
@@ -86,7 +145,7 @@ public class CrudGuitarraDaoImpl implements ICrudGuitarra {
 		private CrudGuitarra mapper(ResultSet rs) throws SQLException { 
 			//Guardar informacion de la BBDD en variables
 			int id = rs.getInt("id");
-			int precio = rs.getInt("precio");
+			float precio = rs.getFloat("precio");
 			String nombre = rs.getString("nombre");
 			String marca = rs.getString("marca");
 			String informacion = rs.getString("informacion");
