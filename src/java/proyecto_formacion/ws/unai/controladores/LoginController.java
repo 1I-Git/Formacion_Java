@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import ws.unai.dao.ProyectoDaoImpl;
 import ws.unai.dao.UsuarioDaoImpl;
 import ws.unai.modelo.Proyecto;
@@ -21,6 +23,8 @@ import ws.unai.modelo.Usuario;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//Logger
+	private final static Logger LOG = Logger.getLogger(LoginController.class);
 	
 	//OBJ del Dao
 	private static final UsuarioDaoImpl objDaoUsuario =  UsuarioDaoImpl.getInstance();
@@ -71,7 +75,7 @@ public class LoginController extends HttpServlet {
 			Usuario usuario = objDaoUsuario.existe(correo, pass);
 			
 			if (usuario != null) {
-				
+				LOG.info("Inicio de sesion valida");
 				// Inicializar Sesion
 				HttpSession session = request.getSession();
 
@@ -95,6 +99,7 @@ public class LoginController extends HttpServlet {
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 				
 			}else {
+				LOG.warn("No se puede iniciar sesion");
 				request.getRequestDispatcher("pages/login.jsp").forward(request, response);
 			}
 			
