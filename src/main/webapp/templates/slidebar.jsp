@@ -112,7 +112,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h4 class="collapse-header text-success">Proyecto:</h4>
             <c:forEach items="${proyectos}" var="p" begin="0" end="7">
-            <a class="collapse-item text-sm" href="pages/login.jsp">${ p.nombre }</a>
+            <a class="collapse-item text-sm" href="${ p.enlace }">${ p.nombre }</a>
 			</c:forEach>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header text-success">Lenguaje:</h6>
