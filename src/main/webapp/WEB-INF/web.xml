@@ -18,4 +18,10 @@
 		
 	</jsp-config>
 
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/pages/ejemplos/verError.jsp</location>
+	</error-page>
+
 </web-app>
