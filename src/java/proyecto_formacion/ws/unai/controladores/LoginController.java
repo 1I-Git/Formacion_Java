@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import ws.unai.dao.ProyectoDaoImpl;
 import ws.unai.dao.UsuarioDaoImpl;
 import ws.unai.modelo.Proyecto;
+import ws.unai.modelo.Rol;
 import ws.unai.modelo.Usuario;
 
 /**
@@ -80,6 +81,7 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession();
 
 				// Sesiones
+				session.setAttribute("usuario_login", usuario);
 				session.setMaxInactiveInterval(60 * 5); // 5 minutos sin peticiones, se invalida la session del usuario.
 				session.setAttribute("id_usuario", usuario.getId());
 				session.setAttribute("nombre_usuario", usuario.getNombre());
@@ -95,8 +97,20 @@ public class LoginController extends HttpServlet {
 				//Enviar datos a la vista
 				request.setAttribute("proyectoLenguajes", proyectoLenguajes);
 				
-				//Mandar a la vista Principal(index.jsp)
-				request.getRequestDispatcher("index.jsp").forward(request, response);
+				if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
+					
+					//Mandar a la vista para Administrar(admin.jsp)
+					request.getRequestDispatcher("pages/backoffice/admin.jsp").forward(request, response);
+					
+				}else {
+					
+					//Mandar a la vista Principal(index.jsp)
+					request.getRequestDispatcher("index.jsp").forward(request, response);
+					
+				}
+				
+				
+				
 				
 			}else {
 				LOG.warn("No se puede iniciar sesion");

@@ -9,11 +9,19 @@ public class Usuario {
 	private String correo;
 	private String pass;
 	private String imagen;
+	private Rol rol;
 	
 	//Constructores
 	
 	public Usuario() {
 		super();
+		this.id = 0;
+		this.nombre = "name_default";
+		this.apellido = "apellido_default";
+		this.correo = "correo_default";
+		this.pass = "pass_default";
+		this.imagen = "no_image";
+		this.rol = new Rol();
 	}
 	
 	//Getter&Setter
@@ -65,14 +73,25 @@ public class Usuario {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
 	
 	//ToString
 	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", pass="
-				+ pass + ", imagen=" + imagen + "]";
+				+ pass + ", imagen=" + imagen + ", rol=" + rol + "]";
 	}
+	
+	
+	
 
 	
 	

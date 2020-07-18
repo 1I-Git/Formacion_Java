@@ -5,11 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import ws.unai.conexion.EstablecerConexion;
 import ws.unai.interfaces.IUsuario;
+import ws.unai.modelo.Rol;
 import ws.unai.modelo.Usuario;
 
 public class UsuarioDaoImpl implements IUsuario {
+	
+	private final static Logger LOG = Logger.getLogger(UsuarioDaoImpl.class);
 	
 	// Constructor
 
@@ -33,7 +38,9 @@ public class UsuarioDaoImpl implements IUsuario {
 	//Sentencias SQL
 	
 	private final String SQL_GET_ALL = "SELECT * FROM usuarios ORDER BY id DESC LIMIT 500;";
-	private final String SQL_EXISTE = "SELECT * FROM usuarios WHERE correo = ? AND pass = ? ;";
+	private final String SQL_EXISTE = "SELECT u.id, u.nombre, u.apellido, u.correo, u.pass, u.imagen, u.rol, r.id_rol, r.rol AS 'nombre_rol' " + 
+									  "FROM usuarios u, roles r " + 
+									  "WHERE u.correo = ? AND u.pass = ? AND u.rol = r.id_rol; ";
 	
 	//Metodos de la interface
 	
@@ -98,6 +105,7 @@ public class UsuarioDaoImpl implements IUsuario {
 				if (rs.next()) {
 					//Inicializar el Obj
 					u = new Usuario();
+					
 					//Guardar en el Obj los datos de ese Usuario
 					u.setId(rs.getInt("id"));
 					u.setNombre(rs.getString("nombre"));
@@ -105,10 +113,18 @@ public class UsuarioDaoImpl implements IUsuario {
 					u.setCorreo(rs.getString("correo"));
 					u.setPass(rs.getString("pass"));
 					u.setImagen(rs.getString("imagen"));
+					
+					//Guardar datos del Rol
+					Rol rol = new Rol();
+					rol.setId(rs.getInt("id_rol"));
+					rol.setRol(rs.getString("nombre_rol"));
+					
+					//Setear Rol del Usuario
+					u.setRol(rol);
 				}
 				
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return u;
 	}
