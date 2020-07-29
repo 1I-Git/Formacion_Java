@@ -1,12 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@include file="/templates/slidebar.jsp" %>
+
+<%@include file="/templates/topbar.jsp" %>
+
 <h1>Esto ES ADMIN!!!!</h1>
-</body>
-</html>
+<a href="leer-fichero">Leer Fichero(Resumen)</a> <br>
+<a href="actividad-fichero">Leer Fichero(Actividad)</a>
+
+<%@include file="/templates/footer.jsp" %>

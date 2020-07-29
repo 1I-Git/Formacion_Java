@@ -100,7 +100,7 @@ public class LoginController extends HttpServlet {
 				if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
 					
 					//Mandar a la vista para Administrar(admin.jsp)
-					request.getRequestDispatcher("pages/backoffice/admin.jsp").forward(request, response);
+					request.getRequestDispatcher("/pages/backoffice/admin.jsp").forward(request, response);
 					
 				}else {
 					
